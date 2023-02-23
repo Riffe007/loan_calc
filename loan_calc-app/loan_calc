@@ -1,0 +1,57 @@
+import tkinter as tk
+from tkinter import ttk
+import matplotlib.pyplot as plt
+
+class LoanCalculator:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Loan Calculator")
+        
+        # Create loan type dropdown
+        ttk.Label(master, text="Loan Type").grid(row=0, column=0, padx=10, pady=10)
+        self.loan_type = tk.StringVar()
+        loan_type_options = ["Home Loan", "Auto Loan", "Miscellaneous Loan"]
+        loan_type_dropdown = ttk.OptionMenu(master, self.loan_type, loan_type_options[0], *loan_type_options)
+        loan_type_dropdown.grid(row=0, column=1, padx=10, pady=10)
+        
+        # Create loan duration dropdown
+        ttk.Label(master, text="Loan Duration (years)").grid(row=1, column=0, padx=10, pady=10)
+        self.loan_duration = tk.StringVar()
+        loan_duration_options = [1, 2, 3, 4, 5, 6, 7, 8, 10, 15, 30]
+        loan_duration_dropdown = ttk.OptionMenu(master, self.loan_duration, loan_duration_options[0], *loan_duration_options)
+        loan_duration_dropdown.grid(row=1, column=1, padx=10, pady=10)
+        
+        # Create loan amount slider
+        ttk.Label(master, text="Loan Amount").grid(row=2, column=0, padx=10, pady=10)
+        self.loan_amount = tk.IntVar()
+        loan_amount_slider = ttk.Scale(master, from_=10000, to=20000000, variable=self.loan_amount, orient="horizontal", length=300)
+        loan_amount_slider.grid(row=2, column=1, padx=10, pady=10)
+        
+        # Create interest rate slider
+        ttk.Label(master, text="Interest Rate (%)").grid(row=3, column=0, padx=10, pady=10)
+        self.interest_rate = tk.DoubleVar()
+        interest_rate_slider = ttk.Scale(master, from_=0, to=10, variable=self.interest_rate, orient="horizontal", length=300, resolution=0.01)
+        interest_rate_slider.grid(row=3, column=1, padx=10, pady=10)
+        
+        # Create button to calculate loan
+        ttk.Button(master, text="Calculate Loan", command=self.calculate_loan).grid(row=4, column=0, columnspan=2, padx=10, pady=10)
+        
+        # Create frame for plots
+        self.plot_frame = ttk.Frame(master)
+        self.plot_frame.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
+
+        if loan_type == "Home Loan":
+            monthly_payment = (loan_amount * monthly_interest_rate) / (1 - (1 + monthly_interest_rate) ** (-num_payments))
+        elif loan_type == "Auto Loan":
+            monthly_payment = (loan_amount * monthly_interest_rate) / (1 - (1 + monthly_interest_rate) ** (-num_payments))
+        else:
+            monthly_payment = (loan_amount * monthly_interest_rate) / (1 - (1 + monthly_interest_rate) ** (-num_payments))
+
+        total_payment = monthly_payment * num_payments
+
+        self.result_label.configure(text=f"Monthly Payment: {monthly_payment:.2f}\nTotal Payment: {total_payment:.2f}")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    loan_calculator = LoanCalculator(root)
+    root.mainloop()
